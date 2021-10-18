@@ -35,8 +35,8 @@ td {
 }
 .date_el {
   position: absolute;
-  left: 85%;
-  top: 65%;
+  top: 390px;
+  right: 20px;
 }
 #name {
   width: 300px;
