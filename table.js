@@ -225,50 +225,52 @@ hsn_El.addEventListener("input", (e) => {
 
 async function getd_add(num) {
   const res = await fetch(
-    `https://sheet.gstincheck.co.in/check/fc399f511b5665b7116ae2ad7808122b/${num}`
+    `https://sheet.gstincheck.co.in/check/f22d28085398d12d46580292caa19227/${num}`
   );
   const data = await res.json();
 
-  const add =
-    data.data.tradeNam +
-    ", " +
-    data.data.pradr.addr.flno +
-    ", " +
-    data.data.pradr.addr.loc +
-    ", " +
-    data.data.pradr.addr.st +
-    ", " +
-    data.data.pradr.addr.dst +
-    ", " +
-    data.data.pradr.addr.pncd +
-    ", " +
-    data.data.pradr.addr.stcd +
-    ".";
-  console.log(add);
+  const add = data.data.pradr.adr;
+  // console.log(add);
+  // data.data.tradeNam +
+  // ", " +
+  // data.data.pradr.addr.flno +
+  // ", " +
+  // data.data.pradr.addr.loc +
+  // ", " +
+  // data.data.pradr.addr.st +
+  // ", " +
+  // data.data.pradr.addr.dst +
+  // ", " +
+  // data.data.pradr.addr.pncd +
+  // ", " +
+  // data.data.pradr.addr.stcd +
+  // ".";
+  // console.log(add);
   d_add.innerHTML = `<textarea name="Delivery-address" id="del" cols="5" rows="5">${add}</textarea>`;
 }
 
 async function getGST(num) {
   const res = await fetch(
-    `https://sheet.gstincheck.co.in/check/fc399f511b5665b7116ae2ad7808122b/${num}`
+    `https://sheet.gstincheck.co.in/check/f22d28085398d12d46580292caa19227/${num}`
   );
 
   const data = await res.json();
   // console.log(data);
-  address_El.innerHTML =
-    data.data.pradr.addr.flno +
-    ", " +
-    data.data.pradr.addr.loc +
-    ", " +
-    data.data.pradr.addr.st +
-    ", " +
-    data.data.pradr.addr.dst +
-    ", " +
-    data.data.pradr.addr.pncd +
-    ", " +
-    data.data.pradr.addr.stcd +
-    ".";
+  address_El.innerHTML = data.data.pradr.adr;
+  // data.data.pradr.addr.flno +
+  // ", " +
+  // data.data.pradr.addr.loc +
+  // ", " +
+  // data.data.pradr.addr.st +
+  // ", " +
+  // data.data.pradr.addr.dst +
+  // ", " +
+  // data.data.pradr.addr.pncd +
+  // ", " +
+  // data.data.pradr.addr.stcd +
+  // ".";
   // console.log(data.data.pradr.addr);
   const party = data.data.tradeNam;
+
   name_El.innerHTML = `<textarea name="Party-Name" id="part" cols="20" rows="20">${party}</textarea>`;
 }
