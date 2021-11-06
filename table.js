@@ -20,6 +20,8 @@ const btn = document.getElementById("btn");
 const minus_btn = document.getElementById("minus");
 const desc = document.getElementById("desc");
 const state_El = document.getElementById("state");
+const truck_El = document.getElementById("truck");
+const Eway = document.getElementById("eway");
 
 let d = new Date();
 let n = +d.getFullYear();
@@ -225,52 +227,50 @@ hsn_El.addEventListener("input", (e) => {
 
 async function getd_add(num) {
   const res = await fetch(
-    `https://sheet.gstincheck.co.in/check/f22d28085398d12d46580292caa19227/${num}`
+    `https://sheet.gstincheck.co.in/check/3f05e1a4433d7febea909920fba293ce/${num}`
   );
   const data = await res.json();
 
   const add = data.data.pradr.adr;
-  // console.log(add);
-  // data.data.tradeNam +
-  // ", " +
-  // data.data.pradr.addr.flno +
-  // ", " +
-  // data.data.pradr.addr.loc +
-  // ", " +
-  // data.data.pradr.addr.st +
-  // ", " +
-  // data.data.pradr.addr.dst +
-  // ", " +
-  // data.data.pradr.addr.pncd +
-  // ", " +
-  // data.data.pradr.addr.stcd +
-  // ".";
-  // console.log(add);
+
   d_add.innerHTML = `<textarea name="Delivery-address" id="del" cols="5" rows="5">${add}</textarea>`;
 }
 
 async function getGST(num) {
   const res = await fetch(
-    `https://sheet.gstincheck.co.in/check/f22d28085398d12d46580292caa19227/${num}`
+    `https://sheet.gstincheck.co.in/check/3f05e1a4433d7febea909920fba293ce/${num}`
   );
 
   const data = await res.json();
   // console.log(data);
   address_El.innerHTML = data.data.pradr.adr;
-  // data.data.pradr.addr.flno +
-  // ", " +
-  // data.data.pradr.addr.loc +
-  // ", " +
-  // data.data.pradr.addr.st +
-  // ", " +
-  // data.data.pradr.addr.dst +
-  // ", " +
-  // data.data.pradr.addr.pncd +
-  // ", " +
-  // data.data.pradr.addr.stcd +
-  // ".";
-  // console.log(data.data.pradr.addr);
+
   const party = data.data.tradeNam;
 
   name_El.innerHTML = `<textarea name="Party-Name" id="part" cols="20" rows="20">${party}</textarea>`;
 }
+
+const scriptURL =
+  "https://script.google.com/macros/s/AKfycbz92LWDF3MpESX2qunPaVGspigo1ehCS5Z4-o-15yUgcW3QwCRFoTQ2ULc-be38co5gWQ/exec";
+const form = document.forms["google-sheet"];
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (number_El.value.trim() === "" || gst_El.value.trim() === "") {
+    alert("Please Enter the GST number");
+    return;
+  }
+  if (truck_El.value.trim() === "") {
+    alert("Please Enter the Truck number");
+    return;
+  }
+  if (Eway.value.trim() === "") {
+    alert("Please Enter the E-way bill number");
+    return;
+  }
+  // console.log(number_El.value);
+  fetch(scriptURL, { method: "POST", body: new FormData(form) })
+    .then((response) => alert("Your data is saved in Google Spread Sheet!"))
+    .catch((error) => console.error("Error!", error.message));
+  document.getElementById("submit").style.display = "none";
+});
