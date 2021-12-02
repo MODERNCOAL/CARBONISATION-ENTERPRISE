@@ -227,7 +227,7 @@ hsn_El.addEventListener("input", (e) => {
 
 async function getd_add(num) {
   const res = await fetch(
-    `https://sheet.gstincheck.co.in/check/3f05e1a4433d7febea909920fba293ce/${num}`
+    `https://sheet.gstincheck.co.in/check/046af4e9a536deed966f4a68f62cab3b/${num}`
   );
   const data = await res.json();
 
@@ -238,7 +238,7 @@ async function getd_add(num) {
 
 async function getGST(num) {
   const res = await fetch(
-    `https://sheet.gstincheck.co.in/check/3f05e1a4433d7febea909920fba293ce/${num}`
+    `https://sheet.gstincheck.co.in/check/046af4e9a536deed966f4a68f62cab3b/${num}`
   );
 
   const data = await res.json();
