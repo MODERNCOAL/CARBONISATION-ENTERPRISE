@@ -22,6 +22,7 @@ const desc = document.getElementById("desc");
 const state_El = document.getElementById("state");
 const truck_El = document.getElementById("truck");
 const Eway = document.getElementById("eway");
+const other_El = document.getElementById("oc");
 
 let d = new Date();
 let n = +d.getFullYear();
@@ -67,9 +68,17 @@ let rt = 0;
 input.addEventListener("input", (e) => {
   put = +e.target.value;
 });
-
+let total;
+other_El.addEventListener("input", (e) => {
+  const other_charge = +e.target.value;
+  total = total + other_charge;
+  console.log(total);
+  const tot = total.toFixed(2);
+  total_El.innerHTML = `<input type="text" id="vof" value=${tot} name='Total' />`;
+  const dec = withDecimal(tot);
+  words.innerHTML = `<textarea name="Delivery-address" id="dec" cols="5" rows="5">${dec}</textarea>`;
+});
 rate.addEventListener("input", (e) => {
-  let total;
   rt = +e.target.value;
 
   const vof = put * rt;
@@ -86,7 +95,8 @@ rate.addEventListener("input", (e) => {
     const tot = total.toFixed(2);
 
     total_El.innerHTML = `<input type="text" id="vof" value=${tot} name='Total' />`;
-    words.innerHTML = withDecimal(tot);
+    const dec = withDecimal(tot);
+    words.innerHTML = `<textarea name="Delivery-address" id="dec" cols="5" rows="5">${dec}</textarea>`;
   } else {
     const sgs = sgst.toFixed(2);
     sgst_El.innerHTML = `<input type="text" id="vof" value=${sgs} name='SGST' />`;
@@ -98,18 +108,26 @@ rate.addEventListener("input", (e) => {
 
     const tot = total.toFixed(2);
     total_El.innerHTML = `<input type="text" id="vof" value=${tot} name='Total' />`;
-    words.innerHTML = withDecimal(tot);
+    const dec = withDecimal(tot);
+    words.innerHTML = `<textarea name="Delivery-address" id="dec" cols="5" rows="5">${dec}</textarea>`;
   }
   if (hsn === 27011990) {
-    const cess = put * 400;
+    let val = sel.value;
+    let cess;
+    if (val === "Tailings") {
+      cess = 0;
+    } else {
+      cess = put * 400;
 
-    const ces = cess.toFixed(2);
-    cess_El.innerHTML = `<input type="text" id="vof" value=${ces} name='CESS' />`;
-    total = put * rt + 2 * sgst + cess;
+      const ces = cess.toFixed(2);
+      cess_El.innerHTML = `<input type="text" id="vof" value=${ces} name='CESS' />`;
+      total = put * rt + 2 * sgst + cess;
 
-    const tot = total.toFixed(2);
-    total_El.innerHTML = `<input type="text" id="vof" value=${tot} name='Total' />`;
-    words.innerHTML = withDecimal(tot);
+      const tot = total.toFixed(2);
+      total_El.innerHTML = `<input type="text" id="vof" value=${tot} name='Total' />`;
+      const dec = withDecimal(tot);
+      words.innerHTML = `<textarea name="Delivery-address" id="dec" cols="5" rows="5">${dec}</textarea>`;
+    }
   }
 });
 
@@ -252,8 +270,10 @@ hsn_El.addEventListener("input", (e) => {
   </select>`;
   }
   const sel = document.getElementById("sel");
+
   sel.addEventListener("change", () => {
-    const val = sel.value;
+    let val = sel.value;
+
     if (val === "Others") {
       desc.innerHTML = `<textarea name="Description" id="" cols="30" rows="10"></textarea>`;
     }
@@ -278,7 +298,7 @@ async function getGST(num) {
 
   const data = await res.json();
   // console.log(data);
-  address_El.innerHTML = data.data.pradr.adr;
+  address_El.innerHTML = `<textarea name="address_EL" id="ad_del" cols="5" rows="5">${data.data.pradr.adr}</textarea>`;
 
   const party = data.data.tradeNam;
 
